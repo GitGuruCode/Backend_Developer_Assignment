@@ -6,7 +6,9 @@ export class CollegeController {
   constructor(private readonly collegeService: CollegeService) {}
 
   @Get(':college_id')
-  getPlacementData(@Param('college_id') collegeId: number) {
-    return this.collegeService.getPlacementData(collegeId);
+  async getCollegeData(@Param('college_id') collegeId: number) {
+    const avgSection = await this.collegeService.getAvgPlacementData(collegeId);
+    const placementSection = await this.collegeService.getPlacementData(collegeId);
+    return { avg_section: avgSection, placement_section: placementSection };
   }
 }
